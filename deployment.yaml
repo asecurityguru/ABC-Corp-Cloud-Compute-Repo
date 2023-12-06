@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vulnerable-app
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: vulnerable
+    spec:
+      containers:
+      - name: vulnerable-container
+        image: nginx:latest
+        securityContext:
+          privileged: true  # Vulnerable: Running in privileged mode
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080  # Vulnerable: Incorrect liveness probe port
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        volumeMounts:
+        - name: secret-volume
+          mountPath: "/etc/secret-volume"  # Vulnerable: Mounting secrets in the container
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: mysecrets  # Vulnerable: Using a generic secret name
