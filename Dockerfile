@@ -1,7 +1,7 @@
 FROM python:alpine
-LABEL MAINTAINER="Madhu Akula" INFO="Kubernetes Goat"
+LABEL MAINTAINER="Raghu The Security Expert" INFO="ABC Corp Cloud Compute"
 
-ENV API_KEY="k8s-goat-cf658c56a501385205cc6d2dafee8fc1"
+ENV API_KEY="cf658c56a501385205cc6d2dafee8fc1"
 
 COPY app.py /app.py
 
